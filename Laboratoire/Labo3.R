@@ -34,7 +34,7 @@ Income <- Carseats$Income
 Advertising <- Carseats$Advertising
 
 lm.fita <- lm(sales ~ . + Income:Advertising + price:age, data = Carseats)
-summary(lm.fit)
+summary(lm.fita)
 
 
 

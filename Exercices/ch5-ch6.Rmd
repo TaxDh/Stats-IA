@@ -1,0 +1,41 @@
+---
+title: "Exo_Ch5-Ch6"
+output: pdf_document
+date: "2024-02-07"
+---
+6.6.1, 6.6.3, 6.6.4, 5.4.3, 5.4.3, 5.4.5
+
+# Q1
+
+## a
+
+le plus petit rss est backward stepwise selection
+
+## b
+
+on peut pas savoir lequel des 3 modèles va avoir le meilleur RSS test. Car cela dépend du overfit et du fiting (tradeof)
+
+## c
+### iii
+
+#Q3
+## a
+le rss d'entrainement va diminué donc IV
+
+## b
+le rss d'entrainement va augmenté donc III, non ça va être
+un U shape, donc 2
+
+## c
+la variance va augmenté, à cause de la plus grande flexibilité
+##d
+c'est l'inverse de la variance, donc IV
+##e
+
+
+# Question 4
+
+#chapitre 5
+# question 3
+
+
