@@ -26,8 +26,8 @@ tf$constant("Hello TensorFlow!")
 # On va entrainer un NN dans un *mauvais* scénario; Hitters
 
 # On prépare notre directory ainsi que nos fonctions R.
-setwd("C:/Users/beaulac_Ce/Dropbox/UQAM/A2023/STT3030-ACT6100/Mon Cours/Lecture7")
-source('Utility.R')
+#setwd("C:/Users/beaulac_Ce/Dropbox/UQAM/A2023/STT3030-ACT6100/Mon Cours/Lecture7")
+source('Fonctions.R')
 
 library(ISLR2)
 
@@ -47,6 +47,7 @@ lmEQM <- EQM(pred,tes_data$Salary)
 mean(sqrt((pred-tes_data$Salary)^2))
 
 # Random forest
+install.packages("randomForest")
 library(randomForest)
 
 lfit <- randomForest(Salary~., data = ent_data)
@@ -203,3 +204,4 @@ RFPrec <- Prec(pred,tes_data$Y)
 
 NNPrec
 RFPrec
+
