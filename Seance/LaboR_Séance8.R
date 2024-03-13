@@ -26,8 +26,8 @@ tf$constant("Hello TensorFlow!")
 # avec un réseaux de neurones de convolution
 
 # On prépare notre directory ainsi que nos fonctions R.
-setwd("C:/Users/beaulac_Ce/Dropbox/UQAM/A2023/STT3030-ACT6100/Mon Cours/Lecture7")
-source('Utility.R')
+#setwd("C:/Users/beaulac_Ce/Dropbox/UQAM/A2023/STT3030-ACT6100/Mon Cours/Lecture7")
+source('Fonctions.R')
 
 # Commencons avec MNSIT que nous avons vu la semaine passé
 mnist <- dataset_mnist ()
@@ -46,7 +46,7 @@ dim(x_test)
 library(tidyr)
 library(ggplot2)
 
-image_1  <- as.data.frame(x_train[1, , ])
+image_1  <- as.data.frame(x_train[1, , ])#[a, , ] a est l'image d'entrainement, on peut changer pour 150
 colnames(image_1) <- seq_len(ncol(image_1))
 image_1$y <- seq_len(nrow(image_1))
 image_1 <- gather(image_1, "x", "value", -y)
@@ -104,7 +104,7 @@ NN_MNIST %>% predict(x_test)
 pred = as.array(NN_MNIST %>% predict(x_test) %>% k_argmax())
 NNPrec <- Prec(pred,y_test)
 
-
+library(randomForest)
 # Foret aléatoire a beosin de sa propose
 Y <- as.factor(mnist$train$y)
 ent_data <- data.frame(cbind(x_train,Y))
@@ -120,10 +120,11 @@ tes_data$Y <- as.factor(tes_data$Y)
 rf <- randomForest(Y~.,data=ent_data,ntree=20,nodesize=1000)
 pred <- predict(rf,tes_data)
 RFPrec <- Prec(pred,tes_data$Y)
+RFPrec# =0.8674, c'est pas bon
 
 # CNN
 CNN_MNIST <- keras_model_sequential() %>%
-  layer_conv_2d(filters = 8, kernel_size = c(3,3), activation = 'relu', input_shape = c(28,28,1)) %>% 
+  layer_conv_2d(filters = 8, kernel_size = c(3,3), activation = 'relu', input_shape = c(28,28,1)) %>% #input_shape=c(dim_x, dim_y, noir/blanc/couleur)
   layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
   layer_conv_2d(filters = 16, kernel_size = c(3,3), activation = 'relu') %>% 
   layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
@@ -134,6 +135,7 @@ CNN_MNIST <- keras_model_sequential() %>%
   layer_dense(units = 10, activation = 'softmax')
 
 CNN_MNIST
+NN_MNIST#ancien model beaucoup plus de parametre, environ 10 fois plus de paramètres
 
 (28-3)/1 + 1
 
@@ -142,6 +144,8 @@ x_train <- mnist$train$x
 y_train <- mnist$train$y
 x_test <- mnist$test$x
 y_test <- mnist$test$y
+
+x_train[1,,]# on peut voir l'image à partir de la matrice
 
 y_train <- to_categorical(y_train , 10)
 y_test <- to_categorical(y_test , 10)
@@ -159,6 +163,11 @@ y_test
 
 pred = as.array(CNN_MNIST %>% predict(x_test) %>% k_argmax())
 CNNPrec <- Prec(pred,y_test)
+
+#comparaison
+CNNPrec
+NNPrec
+RFPrec
 
 ## Exemple sur CIFAR-10
 cifar10 <- dataset_cifar10()
@@ -204,4 +213,4 @@ hist <- CNN_CIFAR %>% fit(x_train , y_train , epochs = 50, batch_size = 256,
                          
 CNN_CIFAR %>% evaluate(x_test, y_test)
 
-
+#exercice faire une foret aléatoire avec cifar et comparé avec un réseau de neurones de convolution
