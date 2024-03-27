@@ -1,0 +1,12 @@
+#Pseudo code pour la séance 9
+
+pour la fonction kmean <- function(data, k, iter)
+
+
+part k (k, data iter){
+	Assignement aléatoire
+	
+	for(i in 1:iter){
+	I Calcul des centre (data, assignement)
+	II Calcul des assignement (data, centre)
+	}
