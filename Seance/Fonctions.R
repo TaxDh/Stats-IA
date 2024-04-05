@@ -18,7 +18,7 @@ EQM <- function(pred,true){
   return (mean((pred-true)^2))
 }
 
-#Prec: retourne la proportion de terme gaux dans les deux vecteurs
+#Prec: retourne la proportion de terme faux dans les deux vecteurs
 #pred: vecteurs de prédictions
 #true: vecteur de vraies valeures
 Prec2 <- function(pred,true){
@@ -28,7 +28,7 @@ Prec2 <- function(pred,true){
   return(prec)
 }
 
-#Prec: retourne la proportion de terme gaux dans les deux vecteurs
+#Prec: retourne la proportion de terme faux dans les deux vecteurs
 #pred: vecteurs de prédictions
 #true: vecteur de vraies valeures
 Prec <- function(pred,true){

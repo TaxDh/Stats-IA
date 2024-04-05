@@ -14,7 +14,7 @@ install.packages("CASdatasets", repos = "http://cas.uqam.ca/pub/", type="source"
 library(CASdatasets)
 data(freMPL2)
 head(freMPL2)
-source('Fonctions.r')
+source('Fonctions.R')
 
 
 hist(freMPL2$ClaimAmount)
@@ -35,7 +35,7 @@ head(Data)
 #c'est un packages qui fait des forêts aléatoires
 install.packages('randomForest')
 library(randomForest)
-?randomForest
+?randomForest#pour modifier les hyperparamètres
 
 
 allData <- train_test_split(0.8,Data)
@@ -47,11 +47,11 @@ Data$Gender
 rf <- randomForest(ClaimAmount~LicAge+VehAge+Gender+MariStat+SocioCateg+VehUsage,data=ent_data)
 pred <- predict(rf,tes_data)#?predict, tres mauvaise documentation sur la fonction predict
 eqm <- EQM(pred,tes_data$ClaimAmount)
-importance(rf,type=1)
-importance(rf,type=2)
+importance(rf,type=1)#?importance---------- type 1 = mean decrease in accuracy
+importance(rf,type=2)# 2 = mean decrease in node impurity (réduction en hétérogénéité)
 eqm
 
-rf <- randomForest(ClaimAmount~LicAge+VehAge+Gender+MariStat+SocioCateg+VehUsage,data=ent_data, importance=TRUE)
+rf <- randomForest(ClaimAmount~LicAge+VehAge+Gender+MariStat+SocioCateg+VehUsage,data=ent_data, importance=TRUE)#calcul de importance
 importance(rf,type=1)
 importance(rf,type=2)
 
@@ -88,10 +88,10 @@ pred <- predict(rf,tes_data)
 Precision <- Prec(pred,tes_data$Cultivars)
 # On va coder ça ensemble!
 
-importance(rf,type=1)
+importance(rf,type=1)#plus c'est haut, plus c'est important
 importance(rf,type=2)
 
-plot(rf)
+plot(rf)#vert-rouge-bleu sont les vignoble 1,2,3 et noir est l'erreur quadratique moyenne
 
 # randomForestSRC est un peu le nouveau package qui remplace randomForest
 # Ishwaran s'en occupe!
@@ -100,3 +100,4 @@ rf <- rfsrc(Cultivars~.,data=ent_data)
 VI <- holdout.vimp(Cultivars~.,data=ent_data, ntree=10000)
 VI$importance
 
+plot(rf)
