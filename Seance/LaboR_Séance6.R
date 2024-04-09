@@ -95,6 +95,7 @@ plot(rf)#vert-rouge-bleu sont les vignoble 1,2,3 et noir est l'erreur quadratiqu
 
 # randomForestSRC est un peu le nouveau package qui remplace randomForest
 # Ishwaran s'en occupe!
+install.packages("randomForestSRC")
 library(randomForestSRC)
 rf <- rfsrc(Cultivars~.,data=ent_data)
 VI <- holdout.vimp(Cultivars~.,data=ent_data, ntree=10000)
