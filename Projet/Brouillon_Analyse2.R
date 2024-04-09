@@ -49,9 +49,45 @@ test_data <- rbind(tes_goodware_data, tes_malware_data)
 library(randomForestSRC)
 rf <- rfsrc(Label~.,data=train_data)
 VI <- holdout.vimp(Label~.,data=train_data, ntree=10000)
-VI$importance
+#VI$importance
 
-plot(rf)
+#plot(rf)
+
+
+##################################################
+pred_labels <- predict(rf, test_data)$predicted
+# Assurez-vous que les niveaux de pred_labels correspondent à ceux de test_data$Label
+pred_labels <- factor(pred_labels, levels = levels(test_data$Label))
+
+# Calculez ensuite la précision
+Precision <- Prec(pred_labels, test_data$Label)
+
+# Affichez la précision
+print(Precision)
+
+##################################################
+
+
+
+# Faire des prédictions sur l'ensemble de test
+rfsrc_pred <- predict(rf, test_data)
+
+# L'erreur de classification est directement fournie dans l'objet de prédiction
+classification_error <- rfsrc_pred$err.rate
+
+# La précision est 1 moins l'erreur de classification pour la classe d'intérêt (dans votre cas, probablement la deuxième classe)
+precision <- 1 - classification_error[1, "OOB"]
+
+# Affichage de la précision
+print(precision)
+
+
+
+
+
+
+
+
 
 pred <- predict(rf,test_data)
 Precision <- Prec(pred,test_data$Label)

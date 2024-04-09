@@ -1,15 +1,11 @@
 set.seed(2024)
 data <- read.table("TUANDROMD.csv", sep = ",", header = T)
-dim(data)
-table(data$Label)
+#dim(data)
+#table(data$Label)
 
 #je ne comprends pas vraiment pourquoi, au moment de ma foret je me retrouve avec des données manquantes... mais ça règle mon problème ici
 data <- na.omit(data)
 
-#899/(3565+899)
-
-head(data)
-colnames(data)
 
 source("Fonctions.R")
 
@@ -24,6 +20,10 @@ table(data$Label)
 
 data$Label <- factor(data$Label)
 class(data$Label)
+
+
+####################################donnees_ent <- donnees
+
 
 #On sépare les goodwares des malwares
 goodware_data <- data[data$Label == 0,]
