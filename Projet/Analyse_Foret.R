@@ -1,5 +1,3 @@
-#ajout de la validation croisée
-
 set.seed(2024)
 donnees <- read.table("TUANDROMD.csv", sep = ",", header = TRUE)
 donnees <- na.omit(donnees)
@@ -16,7 +14,7 @@ donnees_ent <- donnees
 library(randomForest)
 
 # Fonction pour effectuer la validation croisée k-fold
-#entree: les donnees,, la quantité k, le nombre de prédicteur, le nombre d'arbre
+#entree: les donnees, la quantité k, le nombre de prédicteur, le nombre d'arbre
 validation_croisee <- function(donnees, k, mtry, ntree) {
   taille_fold <- floor(nrow(donnees) / k)
   precision_totale <- 0
@@ -39,13 +37,12 @@ validation_croisee <- function(donnees, k, mtry, ntree) {
 mtry_vals <- c(2, sqrt(ncol(donnees_ent) - 1))
 ntree_vals <- c(500, 1000)
 
-# Boucle pour tester différentes combinaisons d'hyperparamètres
+# Boucle pour tester différentes combinaisons d'hyperparamètres mtry et ntree
 meilleure_precision <- 0
 meilleurs_hyperparametres <- c(mtry = NA, ntree = NA)
 
 for (m in mtry_vals) {
   for (n in ntree_vals) {
-    print(n)
     precision <- validation_croisee(donnees_ent, 5, m, n)#on fait un 5-fold
     if (precision > meilleure_precision) {
       meilleure_precision <- precision
@@ -56,9 +53,9 @@ for (m in mtry_vals) {
 
 print(paste("Meilleure précision:", meilleure_precision))
 print(paste("Meilleurs hyperparamètres: mtry =", meilleurs_hyperparametres["mtry"], ", ntree =", meilleurs_hyperparametres["ntree"]))
-#Les meilleur paramètres sont mtry = 15.52417469626 et ntree = 1000
 
-meilleure_foret <- randomForest(Label~., data=donnees_ent, mtry = 16, ntree= 1000, importance=TRUE)
+
+meilleure_foret <- randomForest(Label~., data=donnees_ent, mtry = 16, ntree= 500, importance=TRUE)
 
 plot(meilleure_foret)
 ####################################################################################################################
